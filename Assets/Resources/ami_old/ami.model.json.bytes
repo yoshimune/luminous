@@ -1,0 +1,19 @@
+{
+	"version":"Sample 1.0.0",
+	"model":"ami.moc",
+	"textures":[
+		"ami.2048/texture_00.png",
+		"ami.2048/texture_01.png"
+	],
+	"motions":{
+		"action":[
+			{"file":"motions/action01.mtn","fade_in":500,"fade_out":0},
+			{"file":"motions/idle01.mtn","fade_in":500,"fade_out":0},
+			{"file":"motions/idle02.mtn","fade_in":500,"fade_out":0}
+		],
+		"idle":[
+			{"file":"motions/idle01.mtn","fade_in":500,"fade_out":0},
+			{"file":"motions/idle02.mtn","fade_in":500,"fade_out":0}
+		]
+	}
+}
