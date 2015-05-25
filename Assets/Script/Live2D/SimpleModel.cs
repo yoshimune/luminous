@@ -36,6 +36,12 @@ namespace MyLive2D
             Live2D.init();
             // model.jsonを読み込む
             Json_Read();
+            
+            // デバッグ
+            foreach (var item in live2DModel.getModelImpl().getParamDefSet().getParamDefFloatList()) {
+                // モデルのパラメータIDを取得
+                Debug.Log(item.getParamID().ToString());
+            }
         }
     
     

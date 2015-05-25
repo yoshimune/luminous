@@ -80,7 +80,7 @@ namespace MyLive2D
             // 頂点の更新
             simpleModel.Live2DModel.update();
             // モデルの描画
-            simpleModel.Live2DModel.draw();
+            //simpleModel.Live2DModel.draw();
         }
         
         public void ActionChangeRandom(){
