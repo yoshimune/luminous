@@ -1,4 +1,9 @@
 utogenerated VS/MD solution and project files
+Temp/
+Obj/
+UnityGenerated/
+Library/
+
 *.csproj
 *.unityproj
 *.sln
