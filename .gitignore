@@ -1,8 +1,7 @@
-utogenerated VS/MD solution and project files
-Temp/
-Obj/
-UnityGenerated/
-Library/
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
 
 *.csproj
 *.unityproj
