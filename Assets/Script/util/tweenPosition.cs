@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class tweenPosition : MonoBehaviour {
+public class TweenPosition : MonoBehaviour {
 	
 	public float fadeTime = 1f;
 	public Vector3 startPosition;

@@ -3,15 +3,13 @@ using System.Collections;
 
 public class SpriteFadeOut : MonoBehaviour {
 	public float fadeTime = 1f;
-	public tweenPosition tween;
-	public Vector3 startPosition;
-	public Vector3 finishPosition;
 	private float currentRemainTime;
 	private SpriteRenderer spRenderer;
 	private bool fadeOutFlg;
 	public bool FadeOutFlg
 	{
 		set { this.fadeOutFlg = value; }
+		get { return this.fadeOutFlg; }
 	}
 	// Use this for initialization
 	void Start () {
@@ -24,8 +22,6 @@ public class SpriteFadeOut : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (this.fadeOutFlg && fadeTime > 0) {
-			if(!tween.fadeFlg) tween.SetTween(fadeTime, startPosition, finishPosition);
-			tween.fadeFlg = true;
 			fadeOut();
 		}
 	}
@@ -48,9 +44,12 @@ public class SpriteFadeOut : MonoBehaviour {
 		spRenderer.color = color;
 	}
 	
-	private void SetTween() {
-		tween.fadeTime = fadeTime;
-		tween.startPosition = startPosition;
-		tween.finishPosition = finishPosition;
+	public void init() {
+		init(this.fadeTime);
+	}
+	
+	public void init(float fadeTime) {
+		this.fadeTime = fadeTime;
+		this.currentRemainTime = fadeTime;
 	}
 }

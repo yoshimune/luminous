@@ -4,15 +4,13 @@ using System.Collections;
 public class SpriteFadeIn : MonoBehaviour {
 
 	public float fadeTime = 1f;
-	public tweenPosition tween;
-	public Vector3 startPosition;
-	public Vector3 finishPosition;
 	private float currentRemainTime;
 	private SpriteRenderer spRenderer;
 	private bool fadeInFlg = false;
 	public bool FadeInFlg
 	{
 		set { this.fadeInFlg = value; }
+		get { return this.fadeInFlg; }
 	}
 	// Use this for initialization
 	void Start () {
@@ -25,8 +23,6 @@ public class SpriteFadeIn : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (this.fadeInFlg && fadeTime > 0) {
-			if(!tween.fadeFlg) tween.SetTween(fadeTime, startPosition, finishPosition);
-			tween.fadeFlg = true;
 			fadeIn();
 		}
 	}
@@ -42,7 +38,7 @@ public class SpriteFadeIn : MonoBehaviour {
 			return;
 		}
  
-		// フェードアウト
+		// フェードイン
 		updateAlpha(currentRemainTime);
 	}
 	
@@ -50,5 +46,14 @@ public class SpriteFadeIn : MonoBehaviour {
 		var color = spRenderer.color;
 		color.a = alpha;
 		spRenderer.color = color;
+	}
+	
+	public void init() {
+		init(this.fadeTime);
+	}
+	
+	public void init(float fadeTime) {
+		this.fadeTime = fadeTime;
+		this.currentRemainTime = 0;
 	}
 }
