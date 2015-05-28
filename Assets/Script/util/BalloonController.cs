@@ -4,27 +4,26 @@ using System.Collections;
 public class BalloonController : MonoBehaviour {
 	
 	public GameObject balloon;
+	private float zposition = 100f;
 
 	// Use this for initialization
 	void Start () {
-		if (this.balloon == null) {
-			Debug.Log("Balloon is null.");
-			return;
-		}
-		StartCoroutine("addBalloon", this.balloon);
+		// 自分をinputFieldに登録
+		GameObject field = GameObject.Find("Canvas/InputField");
+		Debug.Log(field.name);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	}
 	
-	private IEnumerator addBalloon (GameObject balloon) {
-		Debug.Log("Coroutine Start.");
-		
-		while (true){
-			GameObject balloon01 = (GameObject)Instantiate (balloon, transform.position, Quaternion.identity);
-			//Destroy(balloon01, 1f);
-			yield return new WaitForSeconds (3f);
-		}
+	public void createBalloon(string value) {
+		Vector3 pos = transform.position;
+		pos.z = zposition;
+		var bal = Instantiate(balloon, pos, transform.rotation) as GameObject;
+		bal.transform.parent = transform;
+		var textMesh = bal.transform.FindChild("BalloonText").gameObject.GetComponent<TextMesh>();
+		textMesh.text = value;
+		this.zposition -= 1.0f;
 	}
 }

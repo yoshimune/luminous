@@ -2,9 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class CharactorManager : MonoBehaviour {
+public class CharactorManager : Photon.MonoBehaviour {
 
 	public GameObject[] charactorModels;
+	public string[] charactorModelsPath;
 	//private List<GameObject> charactors;
 	private GameObject myCharactor;
 	
@@ -16,6 +17,7 @@ public class CharactorManager : MonoBehaviour {
 		if (charactorModels[charNum] == null) return;
 		
 		if (myCharactor != null) Destroy(myCharactor);
-		myCharactor = Instantiate(charactorModels[charNum]);
+		//myCharactor = Instantiate(charactorModels[charNum]);
+		myCharactor = PhotonNetwork.Instantiate(charactorModelsPath[charNum], Vector3.zero, Quaternion.identity, 0);
 	}
 }

@@ -37,5 +37,4 @@ public class AmiAnimation : MonoBehaviour {
 	private void changeAction() {
 		simpleAnimation.ActionChangeRandom();
 	}
-	
 }
