@@ -1,22 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class BalloonManager : MonoBehaviour {
 	
-	public List<GameObject> balloons;
-
+	
 	// Use this for initialization
 	void Start () {
-		balloons = new List<GameObject>();
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
-	
-	public void SetBalloon(GameObject balloon) {
-		this.balloons.Add(balloon);
+	public  void SetBalloonCreater(string message){
+		// CharactorManager以下からBalloonCreaterを探す
+		foreach(GameObject target in GameObject.FindGameObjectsWithTag("CharactorSet")){
+			var balloonCreater = target.transform.GetComponent<BalloonCreater>();
+			if (balloonCreater == null) continue;
+			balloonCreater.CreateBalloon(message);
+		}
 	}
 }

@@ -2,6 +2,9 @@
 using System.Collections;
 
 public class PhotonManager : Photon.MonoBehaviour {
+	
+	public CharactorManager MyCharactorManager;
+	public GameObject Canvas;
 
 	/// マスターサーバーのロビーに入るに呼び出されます。
 	void OnJoinedLobby() {
@@ -14,7 +17,8 @@ public class PhotonManager : Photon.MonoBehaviour {
 	/// これは参加する際だけでなく作成する際も含みます。
 	void OnJoinedRoom() {
 		Debug.Log("部屋に入室");
-		
+		MyCharactorManager.createCharactor(0);
+		Canvas.SetActive(true);
 	}
 	 
 	/// JoinRandom()の入室が失敗した場合に後に呼び出されます。

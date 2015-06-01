@@ -17,13 +17,13 @@ public class Balloon : MonoBehaviour {
 
 	void Start () {
 		// 初期化
-		
+		init();
 		fadeIn();
-		currentFadeOutRemainTime = 0;
 	}
 	
 	private void init() {
 		transform.localPosition = localPosition;
+		currentFadeOutRemainTime = 0;
 	}
 	
 	// Update is called once per frame
@@ -43,6 +43,7 @@ public class Balloon : MonoBehaviour {
 		if (spriteFadeIn == null) return;
 		spriteFadeIn.init(fadeInTime);
 		tweenPosition.SetTween(fadeInTime, transform.localPosition, fadeInTargetPos);
+		tweenPosition.fadeFlg = true;
 		spriteFadeIn.FadeInFlg = true;
 	}
 	
@@ -51,6 +52,7 @@ public class Balloon : MonoBehaviour {
 		if (spriteFadeOut == null) return;
 		spriteFadeOut.init(fadeOutTime);
 		tweenPosition.SetTween(fadeOutTime, transform.localPosition, fadeOutTargetPos);
+		tweenPosition.fadeFlg = true;
 		spriteFadeOut.FadeOutFlg = true;
 	}
 	

@@ -5,50 +5,47 @@ using live2d;
 using live2d.framework;
 using MyLive2D;
 
-public class MouseAnimation : MonoBehaviour {
-
-	//public TextAsset mocFile;
-    //public TextAsset physicsFile;
-    //public Texture2D[] textureFiles;
+public class MouseAnimation : Photon.MonoBehaviour {
 	
 	public SimpleModel simpleModel;
-    //private EyeBlinkMotion eyeBlink = new EyeBlinkMotion();
     private L2DTargetPoint dragMgr = new L2DTargetPoint();
-    private bool mouseFlg = false;
+    //private bool mouseFlg = false;
+    
+    private Vector2 mouthPos;
 	
 	void Start () {
-	
+        mouthPos = Vector2.zero;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		var pos = Input.mousePosition;
-        if (Input.GetMouseButtonDown(0))
-        {
-            //
+        if (photonView.isMine) {
+    		var pos = Input.mousePosition;
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (InputController.GetGameObjectByMousePoint() == gameObject) changeMotion();
+            }
+            else if (Input.GetMouseButton(0))
+            {
+                mouthPos = new Vector2(pos.x / Screen.width*2-1, pos.y/Screen.height*2-1);
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                mouthPos = Vector2.zero;
+            }
         }
-        else if (Input.GetMouseButton(0))
-        {
-            dragMgr.Set(pos.x / Screen.width*2-1, pos.y/Screen.height*2-1);
-            mouseFlg = true;
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            dragMgr.Set(0, 0);
-            mouseFlg = false;
-        }
+        SetMouthPos();
 	}
 	
-	void OnRenderObject()
+	//void OnRenderObject()
+    
+	public void updateMotion()
 	{
         if (simpleModel.Live2DModel == null)
         {
             Debug.LogError("live2DModel is null");
 			return;
         }
-
-        //live2DModel.setMatrix(transform.localToWorldMatrix * live2DCanvasPos);
-
 
         if ( ! Application.isPlaying)
         {
@@ -73,18 +70,26 @@ public class MouseAnimation : MonoBehaviour {
 
         simpleModel.Live2DModel.setParamFloat("PARAM_EYE_BALL_X", dragMgr.getX());
         simpleModel.Live2DModel.setParamFloat("PARAM_EYE_BALL_Y", dragMgr.getY());
-    
-
-/*
-        double timeSec = UtSystem.getUserTimeMSec() / 1000.0;
-        double t = timeSec * 2 * Math.PI;
-        live2DModel.setParamFloat("PARAM_BREATH", (float)(0.5f + 0.5f * Math.Sin(t / 3.0)));
-*/
-        //eyeBlink.setParam(live2DModel);
-
-        //if (physics != null) physics.updateParam(live2DModel);
 
 		simpleModel.Live2DModel.update();
-		simpleModel.Live2DModel.draw();
+		//simpleModel.Live2DModel.draw();
 	}
+    
+    private void SetMouthPos(){
+        dragMgr.Set(mouthPos.x, mouthPos.y);
+    }
+    
+    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.isWriting) {
+            //データの送信
+            stream.SendNext(mouthPos);
+        } else {
+            //データの受信
+            mouthPos = (Vector2)stream.ReceiveNext();
+        }
+    }
+    
+    private void changeMotion() {
+        
+    }
 }
