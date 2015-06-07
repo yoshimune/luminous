@@ -1,18 +1,21 @@
 {
 	"type": "Live2D Model Setting",
 	"name": "ami",
-	"model": "ami.moc",
-	"textures": [
+	"model":"ami.moc",
+	"textures":[
 		"ami.2048/texture_00.png",
 		"ami.2048/texture_01.png"
 	],
 	"motions":{
 		"action":[
-			{"file":"motions/action02.mtn","fade_in":500,"fade_out":0}
+			{"file":"motions/action01.mtn","fade_in":100,"fade_out":100},
+			{"file":"motions/action02.mtn","fade_in":100,"fade_out":100},
+			{"file":"motions/action04.mtn","fade_in":100,"fade_out":100},
+			{"file":"motions/action05.mtn","fade_in":100,"fade_out":100}
 		],
 		"idle":[
-			{"file":"motions/idle01.mtn","fade_in":500,"fade_out":0},
-			{"file":"motions/idle02.mtn","fade_in":500,"fade_out":0}
+			{"file":"motions/idle01.mtn","fade_in":300,"fade_out":100},
+			{"file":"motions/idle02.mtn","fade_in":300,"fade_out":100}
 		]
 	}
 }

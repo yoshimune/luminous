@@ -10,10 +10,14 @@ public class CharactorManager : Photon.MonoBehaviour {
 	public GameObject[] charactorModels;
 	public string[] charactorModelsPath;
 	private GameObject myCharactor;
+	private int charNum;
+	//private Vector3 myCharactorPos;
 	
 	private List<GameObject> MyCharactors;
 	
 	void Start(){
+		charNum = 0;
+		//myCharactorPos = Vector3.zero;
 	}
 	
 	public void createCharactor(){
@@ -21,25 +25,33 @@ public class CharactorManager : Photon.MonoBehaviour {
 	}
 	
 	public void createCharactor(int charNum){
-		if (charactorModels.Length <= charNum) return;
-		if (charactorModels[charNum] == null) return;
+		//if (charactorModels.Length <= charNum) return;
+		//if (charactorModels[charNum] == null) return;
 		
+		this.charNum = charNum;
+		 Vector3 pos = new Vector3(0, -0.5f, 0);
 		
 		if (myCharactor != null) {
-			photonView.RPC("Destroy", PhotonTargets.All);
+			pos = myCharactor.transform.position;
+			//photonView.RPC("Destroy", PhotonTargets.All);
+			Destroy();
 		}
 		var charactor = PhotonNetwork.Instantiate(
 			charactorModelsPath[charNum],
-			new Vector3(0, -0.5f, 0),
+			pos,
 			Quaternion.identity,
 			0);
-		if(photonView.isMine) myCharactor = charactor;
+		//if(photonView.isMine) myCharactor = charactor;
+		myCharactor = charactor;
 	}
 	
 	[RPC]
 	void Destroy()
 	{
-		if(photonView.isMine) PhotonNetwork.Destroy(myCharactor);
+		//if(photonView.isMine) PhotonNetwork.Destroy(myCharactor);
+		//PhotonNetwork.Destroy(myCharactor);
+		SetController myController = myCharactor.GetComponent<SetController>();
+		if (myController != null) myController.MyDestroy();
 	}
 	
 	public void MouthAnimationStart(){
@@ -48,5 +60,15 @@ public class CharactorManager : Photon.MonoBehaviour {
 			if (mouthAnimation == null) continue;
 			mouthAnimation.startMouth();
 		}
+	}
+	
+	public void changeCharactor(){
+		charNum += 1;
+		Debug.Log("this.charNum:" + this.charNum);
+		if (charactorModelsPath.Length <= charNum) {
+			charNum = 0;
+		}
+		Debug.Log("this.charNum:" + this.charNum);
+		createCharactor(charNum);
 	}
 }

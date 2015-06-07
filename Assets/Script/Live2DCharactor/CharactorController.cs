@@ -23,21 +23,22 @@ public class CharactorController : Photon.MonoBehaviour {
 	
 	void Update () {
 		if (photonView.isMine) updateCharactor();
-		MotionChange();
+		MotionChangeMotionFinish();
 	}
 	
 	private void updateCharactor(){
 		// モーションの再生
 		if (MySimpleAnimation.isMotionFinished()){
-			Debug.Log("CharactorController.CurrentMotion01:" + CurrentMotion);
+			//Debug.Log("CharactorController.CurrentMotion01:" + CurrentMotion);
 			CurrentMotion = MySimpleAnimation.GetRandomIdleMotionName();
-			MotionChange();
+			MotionChangeMotionFinish();
 		}
 	}
 	
-	private void MotionChange() {
+	private void MotionChangeMotionFinish() {
 		if(isMotionFinish || MySimpleAnimation.isMotionFinished()){
-			Debug.Log("CharactorController.CurrentMotion02:" + CurrentMotion);
+			/*
+			//Debug.Log("CharactorController.CurrentMotion02:" + CurrentMotion);
 			MySimpleAnimation.IdleMotionChange(CurrentMotion);
 			
 			if(photonView.isMine) {
@@ -49,7 +50,24 @@ public class CharactorController : Photon.MonoBehaviour {
 			}
 			
 			isMotionFinish = false;
+			*/
+			motionChange();
 		}
+	}
+	
+	private void motionChange() {
+		//Debug.Log("CharactorController.CurrentMotion02:" + CurrentMotion);
+			MySimpleAnimation.IdleMotionChange(CurrentMotion);
+			
+			if(photonView.isMine) {
+				photonView.RPC("SetParam", PhotonTargets.All, CurrentMotion, true);
+			}
+			else if(MySimpleAnimation.isMotionFinished()){
+				// アニメーションしていない場合、適当なアニメーションを再生
+				MySimpleAnimation.IdleMotionChange(MySimpleAnimation.GetRandomIdleMotionName());
+			}
+			
+			isMotionFinish = false;
 	}
 	
 	[RPC]
@@ -58,5 +76,18 @@ public class CharactorController : Photon.MonoBehaviour {
 		Debug.Log("RPC motionname:" + motionName + " isFinished:" + isFinished);
 		CurrentMotion = motionName;
 		this.isMotionFinish = isFinished;
+	}
+	
+	// 他者が入室した時
+	void OnPhotonPlayerConnected(PhotonPlayer player){
+		Debug.Log("CharactorController.RPCMotionChange");
+		photonView.RPC("RPCMotionChange", PhotonTargets.All, "action05.mtn", true);
+	}
+	
+	[RPC]
+	void RPCMotionChange(string motionName, bool isFinished){
+		Debug.Log("CharactorController.RPCMotionChange motionName:" + motionName);
+		MySimpleAnimation.ActionMotionChange(motionName);
+		//this.isMotionFinish = isFinished;
 	}
 }

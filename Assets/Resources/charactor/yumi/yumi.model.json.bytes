@@ -1,0 +1,19 @@
+{
+	"type": "Live2D Model Setting",
+	"name": "yumi",
+	"model":"yumi.moc",
+	"textures":[
+		"yumi.2048/texture_00.png"
+	],
+	"motions":{
+		"idle":[
+			{"file":"motions/idle01.mtn","fade_in":300,"fade_out":100},
+			{"file":"motions/idle02.mtn","fade_in":300,"fade_out":100}
+		],
+		"action":[
+			{"file":"motions/action01.mtn","fade_in":300,"fade_out":100},
+			{"file":"motions/action02.mtn","fade_in":300,"fade_out":100},
+			{"file":"motions/action05.mtn","fade_in":300,"fade_out":100}
+		]
+	}
+}

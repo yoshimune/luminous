@@ -8,6 +8,7 @@ using MyLive2D;
 public class MouseAnimation : Photon.MonoBehaviour {
 	
 	public SimpleModel simpleModel;
+    public SimpleAnimation MySimpleAnimation;
     private L2DTargetPoint dragMgr = new L2DTargetPoint();
     //private bool mouseFlg = false;
     
@@ -90,6 +91,14 @@ public class MouseAnimation : Photon.MonoBehaviour {
     }
     
     private void changeMotion() {
-        
+        //MySimpleAnimation.ActionChangeRandom();
+        var motionParam = DictionaryUtil<string, MotionParam>.getRandom(simpleModel.MtnFiles["action"]);
+        photonView.RPC("RPCChangeMotion", PhotonTargets.All, motionParam.Mtn.name);
+    }
+    
+    [RPC]
+    void RPCChangeMotion(string motionName) {
+        Debug.Log("MouseAnimation.RPCChangeMotion:" + motionName);
+        MySimpleAnimation.ActionMotionChange(motionName);
     }
 }

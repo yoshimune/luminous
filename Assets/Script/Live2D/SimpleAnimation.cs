@@ -103,7 +103,6 @@ namespace MyLive2D
             motionManager.startMotion(motion, false);
             // 音声再生
             if (simpleModel.MtnFiles[kind][filenm].Sound != null) {
-                Debug.Log("6");
                 GetComponent<AudioSource>().clip = simpleModel.MtnFiles[kind][filenm].Sound;
                 GetComponent<AudioSource>().Play();
             }

@@ -19,14 +19,23 @@ public class InputFieldController : MonoBehaviour {
 	public void EnterField(){
 		string inputString = GetComponent<InputField>().text;
 		
-		if(System.Text.RegularExpressions.Regex.IsMatch(inputString, @"[\r\n]")){
-			
-			// 改行文字を削除
-			System.Text.RegularExpressions.Regex r = new System.Text.RegularExpressions.Regex(@"[\r\n]");
-			string message = r.Replace(inputString, "");
-			GetComponent<BalloonManager>().SetBalloonCreater(message);
+		if(System.Text.RegularExpressions.Regex.IsMatch(inputString, @"[\r\n]")){			
+			GetComponent<BalloonManager>().SetBalloonCreater(formatText(inputString));
 			MyCharactorManager.MouthAnimationStart();
 			GetComponent<InputField>().text = "";
 		}
+	}
+	
+	private string formatText(string text) {
+		System.Text.RegularExpressions.Regex r = new System.Text.RegularExpressions.Regex(@"[\r\n]");
+		string formatText = r.Replace(text, "");
+		if (formatText.Length > 10){
+			string headString = formatText.Substring(0,10);
+			string tailString;
+			if(formatText.Length > 20) tailString = formatText.Substring(10,10);
+			else tailString = tailString = formatText.Substring(10);
+			formatText = headString + "\n" + tailString;
+		}
+		return formatText;
 	}
 }
